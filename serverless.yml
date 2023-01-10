@@ -32,7 +32,7 @@ functions:
     events:
       - http:
           method: GET
-          path: /auction
+          path: /auctions
 
   getAuction:
     handler: src/handlers/getAuction.handler

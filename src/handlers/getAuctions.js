@@ -1,8 +1,5 @@
 import AWS from 'aws-sdk';
-import middy from '@middy/core';
-import httpErrorHandler from '@middy/http-error-handler';
-import httpEventNormalizer from '@middy/http-event-normalizer';
-import httpJsonBodyParser from '@middy/http-json-body-parser';
+import commonMiddleware from '../../lib/commonMiddleware';
 import createError from 'http-errors';
 import { Resolver } from 'webpack';
 
@@ -28,7 +25,4 @@ async function getAuctions(event, context) {
   };
 }
 
-export const handler = middy(getAuctions)
-  .use(httpJsonBodyParser())
-  .use(httpErrorHandler())
-  .use(httpEventNormalizer());
+export const handler = commonMiddleware(getAuctions);

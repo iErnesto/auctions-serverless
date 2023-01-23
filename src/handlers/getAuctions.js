@@ -34,7 +34,7 @@ async function getAuctions(event, context) {
   };
 }
 
-export const handler = getAuctions.use(
+export const handler = commonMiddleware(getAuctions).use(
   validator({
     inputSchema: getAuctionsSchema,
     ajvOptions: {

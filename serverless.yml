@@ -1,5 +1,4 @@
 service: auction-service
-
 plugins:
   - serverless-bundle
   - serverless-pseudo-parameters
@@ -12,8 +11,10 @@ provider:
   region: eu-west-1
   environment:
     AUCTIONS_TABLE_NAME: ${self:custom.AuctionsTable.name}
+    MAIL_QUEUE_URL: ${self:custom.MailQueue.url}
   iamRoleStatements:
     - ${file(iam/AuctionsTableIAM.yml):AuctionsTableIAM}
+    - ${file(iam/MailQueueIAM.yml):MailQueueIAM}
 
 resources:
   Resources:
@@ -55,7 +56,7 @@ functions:
   processAuctions:
     handler: src/handlers/processAuctions.handler
     # events:
-    #   - schedule: rate(1)
+    #   - schedule: rate(1 minute)
 
 custom:
   authorizer: arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:auth-service-${self:provider.stage}-auth
